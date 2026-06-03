@@ -141,6 +141,72 @@ console.log(decryptedBuffer.toString("utf-8"));
 
 ---
 
+## ▶️ How to Run the Program
+
+### Prerequisites
+
+Before running the project, ensure that the following software is installed:
+
+- Node.js (v14 or later recommended)
+- npm (comes with Node.js)
+
+Verify installation using:
+
+```bash
+node -v
+npm -v
+```
+
+### Step 1: Create the Project File
+
+Create a file named:
+
+```text
+enhanced_rc4.js
+```
+
+Copy the JavaScript implementation into this file.
+
+### Step 2: Run the Program
+
+Open a terminal in the project directory and execute:
+
+```bash
+node enhanced_rc4.js
+```
+
+### Step 3: Observe the Output
+
+The program will display:
+
+```text
+Original Text:
+Hello, Group 23! This is an Enhanced RC4 test in JavaScript.
+
+Ciphertext (Hex):
+<Encrypted hexadecimal output>
+
+Decrypted Text:
+Hello, Group 23! This is an Enhanced RC4 test in JavaScript.
+```
+
+### How It Works
+
+1. The user provides a secret key and plaintext message.
+2. The key is whitened using SHA-256.
+3. The modified RC4 performs double key scheduling.
+4. The first 1024 keystream bytes are discarded.
+5. The remaining keystream is used to encrypt the plaintext.
+6. Using the same key, the ciphertext is decrypted back to the original message.
+
+### Expected Result
+
+- The ciphertext appears as unreadable hexadecimal data.
+- The decrypted text must exactly match the original plaintext.
+- Successful recovery of the original message confirms correct encryption and decryption.
+
+---
+
 ## ✅ Expected Output
 
 ```text
