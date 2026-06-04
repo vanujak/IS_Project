@@ -1,4 +1,5 @@
 const crypto = require("crypto"); // Built-in Node.js crypto module
+const readline = require("readline");
 
 class EnhancedRC4 {
   constructor(key) {
@@ -77,28 +78,36 @@ class EnhancedRC4 {
 // TEST EXECUTION
 // ==========================================
 
-const secretKey = "MySuperSecretProjectKey";
-const plaintext = "Vanuja";
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-console.log("Original Text: ", plaintext);
+rl.question("Enter Secret Key: ", (secretKey) => {
+  rl.question("Enter Plaintext: ", (plaintext) => {
+    console.log("\nOriginal Text:", plaintext);
 
-// Convert input string to a byte buffer
-const dataBuffer = Buffer.from(plaintext, "utf-8");
+    const dataBuffer = Buffer.from(plaintext, "utf-8");
 
-// --- ENCRYPTION ---
-const rc4Encrypt = new EnhancedRC4(secretKey);
-const ciphertext = rc4Encrypt.process(dataBuffer);
+    // Encryption
+    const rc4Encrypt = new EnhancedRC4(secretKey);
+    const ciphertext = rc4Encrypt.process(dataBuffer);
 
-// Format ciphertext to a space-separated hex string for readability
-const hexCiphertext = ciphertext
-  .toString("hex")
-  .match(/.{1,2}/g)
-  .join(" ");
-console.log("\nCiphertext (Hex): \n" + hexCiphertext);
+    const hexCiphertext = ciphertext
+      .toString("hex")
+      .match(/.{1,2}/g)
+      .join(" ");
 
-// --- DECRYPTION ---
-// Since RC4 is symmetric, passing the ciphertext back results in plaintext
-const rc4Decrypt = new EnhancedRC4(secretKey);
-const decryptedBuffer = rc4Decrypt.process(ciphertext);
+    console.log("\nCiphertext (Hex):");
+    console.log(hexCiphertext);
 
-console.log("\nDecrypted Text: ", decryptedBuffer.toString("utf-8"));
+    // Decryption
+    const rc4Decrypt = new EnhancedRC4(secretKey);
+    const decryptedBuffer = rc4Decrypt.process(ciphertext);
+
+    console.log("\nDecrypted Text:");
+    console.log(decryptedBuffer.toString("utf-8"));
+
+    rl.close();
+  });
+});
